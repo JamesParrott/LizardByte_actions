@@ -28,6 +28,12 @@ inputs:
       Set to false to avoid errors from third party rate limits.
     default: "true"
     required: false
+  show-me-all-nine-hundred-available-python-tags:
+    description: >
+      If true, run pyenv install -- list", and add over 900
+      lines to the output from your Workflow(s).
+    default: "false"
+    required: false
 
 outputs:
   python-version:
@@ -97,6 +103,7 @@ runs:
         echo "default-version=${DEFAULT_PYTHON_VERSION}" >> $GITHUB_OUTPUT
 
     - name: Available Python versions
+      if: ${{ inputs.show-me-all-nine-hundred-available-python-tags == 'true' }}
       shell: bash
       run: pyenv install --list
 
